@@ -1,0 +1,109 @@
+---
+title: 'New file'
+description: 'Description of your new file.'
+---
+
+# Modes
+
+Agent offers different modes optimized for specific tasks. Each mode has different capabilities and tools enabled to match your workflow needs.
+
+Understanding [how agents work](https://cursor.com/learn/agents) and [tool calling fundamentals](https://cursor.com/learn/tool-calling) will help you choose the right mode for your task.
+
+| Mode                  | For                                 | Capabilities                                                       | Tools             |
+| --------------------- | ----------------------------------- | ------------------------------------------------------------------ | ----------------- |
+| [**Agent**](#agent)   | Complex features, refactoring       | Autonomous exploration, multi-file edits                           | All tools enabled |
+| [**Ask**](#ask)       | Learning, planning, questions       | Read-only exploration, no automatic changes                        | Search tools only |
+| [**Plan**](#plan)     | Complex features requiring planning | Creates detailed plans before execution, asks clarifying questions | All tools enabled |
+| [**Custom**](#custom) | Specialized workflows               | User-defined capabilities                                          | Configurable      |
+
+## [Agent](#agent)
+
+The default mode for complex coding tasks. Agent autonomously explores your codebase, edits multiple files, runs commands, and fixes errors to complete your requests.
+
+![Agent mode](https://content.gitbook-staging.com/content/iCFEAE0uVHukUN8qrgvB/blobs/LcdM2pzM82NbNQkYppxM/image)
+
+## [Ask](#ask)
+
+Read-only mode for learning and exploration. Ask searches your codebase and provides answers without making any changes - perfect for understanding code before modifying it.
+
+![Ask mode](https://content.gitbook-staging.com/content/iCFEAE0uVHukUN8qrgvB/blobs/Xl1YrlLVEYWmpLDnWaNj/image)
+
+## [Plan](#plan)
+
+Plan Mode creates detailed implementation plans before writing any code. Agent researches your codebase, asks clarifying questions, and generates a reviewable plan you can edit before building.
+
+Press `Shift+Tab` from the chat input to activate Plan Mode. Cursor also suggests it automatically when you type keywords that indicate complex tasks.
+
+### [How it works](#how-it-works)
+
+{% stepper %}
+{% step %}
+
+### Ask clarifying questions
+
+Agent asks clarifying questions to understand your requirements.
+{% endstep %}
+
+{% step %}
+
+### Research the codebase
+
+Researches your codebase to gather relevant context.
+{% endstep %}
+
+{% step %}
+
+### Create a comprehensive plan
+
+Creates a comprehensive implementation plan.
+{% endstep %}
+
+{% step %}
+
+### Review and edit the plan
+
+You review and edit the plan through chat or markdown files.
+{% endstep %}
+
+{% step %}
+
+### Build the plan
+
+Click to build the plan when ready. Plans open as ephemeral virtual files that you can view and edit. To save a plan to your workspace, click "Save to workspace" to store it in `.cursor/plans/` for future reference, team sharing, and documentation.
+{% endstep %}
+{% endstepper %}
+
+## [Custom](#custom)
+
+Create your own modes with specific tool combinations and instructions. Mix and match capabilities to fit your workflow.
+
+Custom modes are in beta. Enable them in `Cursor Settings` → `Chat` → `Custom Modes`
+
+### [Examples](#examples)
+
+* Learn
+* Refactor
+* Debug
+
+## [Switching modes](#switching-modes)
+
+* Use the mode picker dropdown in Agent
+* Press `Cmd+.` for quick switching
+* Set keyboard shortcuts in [settings](#settings)
+
+## [Settings](#settings)
+
+All modes share common configuration options:
+
+| Setting            | Description                           |
+| ------------------ | ------------------------------------- |
+| Model              | Choose which AI model to use          |
+| Keyboard shortcuts | Set shortcuts to switch between modes |
+
+Mode-specific settings:
+
+| Mode       | Settings                      | Description                                                                                      |
+| ---------- | ----------------------------- | ------------------------------------------------------------------------------------------------ |
+| **Agent**  | Auto-run and Auto-fix Errors  | Automatically run commands and fix errors                                                        |
+| **Ask**    | Search Codebase               | Automatically find relevant files                                                                |
+| **Custom** | Tool selection & Instructions | Configure [tools](https://carbonara.gitbook-staging.io/importify/agent/tools) and custom prompts |
