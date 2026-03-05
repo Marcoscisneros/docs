@@ -3,88 +3,122 @@ title: "Modes"
 description: "This is a nice description"
 ---
 
-Agent offers different modes optimized for specific tasks. Each mode has different capabilities and tools enabled to match your workflow needs.
+> ## Documentation Index
 
-Understanding [how agents work](https://cursor.com/learn/agents) and [tool calling fundamentals](https://cursor.com/learn/tool-calling) will help you choose the right mode for your task.
+> Fetch the complete documentation index at: https://docs.together.ai/llms.txt
 
-| Mode                  | For                                 | Capabilities                                                       | Tools             |
-| --------------------- | ----------------------------------- | ------------------------------------------------------------------ | ----------------- |
-| [**Agent**](#agent)   | Complex features, refactoring       | Autonomous exploration, multi-file edits                           | All tools enabled |
-| [**Ask**](#ask)       | Learning, planning, questions       | Read-only exploration, no automatic changes                        | Search tools only |
-| [**Plan**](#plan)     | Complex features requiring planning | Creates detailed plans before execution, asks clarifying questions | All tools enabled |
-| [**Custom**](#custom) | Specialized workflows               | User-defined capabilities                                          | Configurable      |
+> Use this file to discover all available pages before exploring further.
 
-## [Agent](#agent)
+# Quickstart
 
-The default mode for complex coding tasks. Agent autonomously explores your codebase, edits multiple files, runs commands, and fixes errors to complete your requests.
+> Get up to speed with our API in one minute.
 
-![Agent mode](https://content.gitbook-staging.com/content/iCFEAE0uVHukUN8qrgvB/blobs/LcdM2pzM82NbNQkYppxM/image)
+Together AI makes it easy to run leading open-source models using only a few lines of code.
 
-## [Ask](#ask)
+## 1. Register for an account
 
-Read-only mode for learning and exploration. Ask searches your codebase and provides answers without making any changes - perfect for understanding code before modifying it.
+First, [register for an account](https://api.together.xyz/settings/api-keys) to get an API key.
 
-![Ask mode](https://content.gitbook-staging.com/content/iCFEAE0uVHukUN8qrgvB/blobs/Xl1YrlLVEYWmpLDnWaNj/image)
+Once you've registered, set your account's API key to an environment variable named `TOGETHER_API_KEY`:
 
-## [Plan](#plan)
+```shell Shell
+export TOGETHER_API_KEY=xxxxx
+```
 
-Plan Mode creates detailed implementation plans before writing any code. Agent researches your codebase, asks clarifying questions, and generates a reviewable plan you can edit before building.
+## 2. Install your preferred library
 
-Press `Shift+Tab` from the chat input to activate Plan Mode. Cursor also suggests it automatically when you type keywords that indicate complex tasks.
+Together provides an official library for Python and TypeScript, or you can call our HTTP API in any language you want:
 
-### [How it works](#how-it-works)
+<CodeGroup>
 
-### Ask clarifying questions
+```sh uv
+uv init #optional
+uv add together
+```
 
-Agent asks clarifying questions to understand your requirements.
 
-### Research the codebase
+```sh pip
+pip install together
+```
 
-Researches your codebase to gather relevant context.
 
-### Create a comprehensive plan
+```sh npm
+npm install together-ai
+```
 
-Creates a comprehensive implementation plan.
+</CodeGroup>
 
-### Review and edit the plan
+## 3. Run your first query against a model
 
-You review and edit the plan through chat or markdown files.
+Choose a model to query. In this example, we'll choose GPT OSS 20B with streaming:
 
-### Build the plan
+<CodeGroup>
 
-Click to build the plan when ready. Plans open as ephemeral virtual files that you can view and edit. To save a plan to your workspace, click "Save to workspace" to store it in `.cursor/plans/` for future reference, team sharing, and documentation.
+```python Python
+from together import Together
+client = Together()
+stream = client.chat.completions.create(
+    model="openai/gpt-oss-20b",
+    messages=[
+        {
+            "role": "user",
+            "content": "What are the top 3 things to do in New York?",
+        }
+    ],
+    stream=True,
+)
+for chunk in stream:
+    print(chunk.choices[0].delta.content or "", end="", flush=True)
+```
 
-## [Custom](#custom)
 
-Create your own modes with specific tool combinations and instructions. Mix and match capabilities to fit your workflow.
+```ts TypeScript
+import Together from "together-ai"
+async function main() {
+  const together = new Together()
+  const stream = await together.chat.completions.create({
+    model: "openai/gpt-oss-20b",
+    messages: [
+      { role: "user", content: "What are the top 3 things to do in New York?" },
+    ],
+    stream: true,
+  })
+  for await (const chunk of stream) {
+    process.stdout.write(chunk.choices[0]?.delta?.content || "")
+  }
+}
+main()
+```
 
-Custom modes are in beta. Enable them in `Cursor Settings` → `Chat` → `Custom Modes`
 
-### [Examples](#examples)
+```curl cURL
+curl -N -X POST "https://api.together.xyz/v1/chat/completions" \
+  -H "Authorization: Bearer $TOGETHER_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "google/gemma-3n-E4B-it",
+    "messages": [
+      {"role": "user", "content": "Tell me a joke about programmers."}
+    ],
+    "max_tokens": 100,
+    "temperature": 0.8,
+    "stream": true
+  }'
+```
 
-- Learn
-- Refactor
-- Debug
+</CodeGroup>
 
-## [Switching modes](#switching-modes)
+Congratulations –you've just made your first query to Together AI!
 
-- Use the mode picker dropdown in Agent
-- Press `Cmd+.` for quick switching
-- Set keyboard shortcuts in [settings](#settings)
+## Next steps
 
-## [Settings](#settings)
+- Explore [our cookbook](https://github.com/togethercomputer/together-cookbook) for Python recipes with Together AI
+- Explore [our demos](https://together.ai/demos) for full-stack open source example apps.
+- Check out the [Together AI playground](https://api.together.xyz/playground) to try out different models.
+- See [our integrations](/docs/integrations) with leading LLM frameworks.
 
-All modes share common configuration options:
+## Resources
 
-| Setting            | Description                           |
-| ------------------ | ------------------------------------- |
-| Model              | Choose which AI model to use          |
-| Keyboard shortcuts | Set shortcuts to switch between modes |
-
-Mode-specific settings:
-
-| Mode       | Settings                      | Description                                                                                      |
-| ---------- | ----------------------------- | ------------------------------------------------------------------------------------------------ |
-| **Agent**  | Auto-run and Auto-fix Errors  | Automatically run commands and fix errors                                                        |
-| **Ask**    | Search Codebase               | Automatically find relevant files                                                                |
-| **Custom** | Tool selection & Instructions | Configure [tools](https://carbonara.gitbook-staging.io/importify/agent/tools) and custom prompts |
+- [Discord](https://discord.com/invite/9Rk6sSeWEG)
+- [Pricing](https://www.together.ai/pricing)
+- [Support](https://www.together.ai/contact)
